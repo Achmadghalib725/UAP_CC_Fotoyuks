@@ -22,7 +22,7 @@ class PhotoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:51200',
         ]);
 
         $file = $request->file('photo');
@@ -54,5 +54,25 @@ class PhotoController extends Controller
         $photo->delete();
 
         return redirect()->route('photos.index')->with('success', 'Foto berhasil dihapus!');
+    }
+
+    public function image($id)
+    {
+        $photo = Photo::findOrFail($id);
+        $this->authorize('view', $photo);
+
+        $file = Storage::disk('public')->get($photo->path);
+
+        return response($file, 200)->header('Content-Type', $photo->mime_type);
+    }
+
+    public function download($id)
+    {
+        $photo = Photo::findOrFail($id);
+        $this->authorize('view', $photo);
+
+        $filePath = Storage::disk('public')->path($photo->path);
+
+        return response()->download($filePath, $photo->original_name);
     }
 }

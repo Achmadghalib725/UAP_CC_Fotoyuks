@@ -34,7 +34,7 @@
                     <!-- Image Section -->
                     <div class="md:w-2/3 p-6">
                         <div class="relative">
-                            <img src="{{ Storage::url($photo->path) }}" alt="{{ $photo->original_name }}"
+                            <img src="{{ route('photos.image', $photo) }}" alt="{{ $photo->original_name }}"
                                  class="w-full rounded-lg shadow-lg object-contain max-h-96 md:max-h-[600px]">
                             <div class="absolute top-4 right-4">
                                 <div class="bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
@@ -92,12 +92,18 @@
 
                             <div class="pt-4 border-t border-gray-200 dark:border-gray-600">
                                 <div class="flex space-x-3">
-                                    <a href="{{ Storage::url($photo->path) }}" target="_blank"
+                                    <a href="{{ route('photos.image', $photo) }}" target="_blank"
                                        class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transform hover:scale-105 transition-all duration-200 text-center">
                                         <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                                         </svg>
                                         Lihat Asli
+                                    </a>
+                                    <a href="{{ route('photos.download', $photo) }}"
+                                       class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transform hover:scale-105 transition-all duration-200">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
                                     </a>
                                     <button onclick="navigator.share({title: '{{ $photo->original_name }}', url: '{{ Storage::url($photo->path) }}'})"
                                             class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transform hover:scale-105 transition-all duration-200">
