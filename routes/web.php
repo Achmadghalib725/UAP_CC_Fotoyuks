@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     // Photo routes
     Route::resource('photos', PhotoController::class);
     Route::get('photos/{id}/image', [PhotoController::class, 'image'])->name('photos.image');
+    Route::get('photos/{id}/download', [PhotoController::class, 'download'])->name('photos.download');
 });
 
 require __DIR__.'/auth.php';

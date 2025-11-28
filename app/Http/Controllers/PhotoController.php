@@ -71,6 +71,10 @@ class PhotoController extends Controller
         $photo = Photo::findOrFail($id);
         $this->authorize('view', $photo);
 
+        if (!Storage::disk('public')->exists($photo->path)) {
+            abort(404, 'File not found.');
+        }
+
         $filePath = Storage::disk('public')->path($photo->path);
 
         return response()->download($filePath, $photo->original_name);
