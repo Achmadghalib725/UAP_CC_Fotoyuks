@@ -15,6 +15,54 @@
 
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            
+            {{-- [MULAI] BAGIAN FILTER WARNA --}}
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6 p-6">
+                <form method="GET" action="{{ route('photos.index') }}">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Cari Berdasarkan Warna Dominan</h3>
+                    <div class="flex flex-wrap gap-4 items-center">
+                        {{-- Merah --}}
+                        <button type="submit" name="color" value="#FF0000" title="Merah" 
+                            class="w-10 h-10 rounded-full bg-red-500 border-2 border-transparent hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-transform transform hover:scale-110 {{ request('color') == '#FF0000' ? 'ring-2 ring-offset-2 ring-gray-500 scale-110' : '' }}">
+                        </button>
+                        
+                        {{-- Biru --}}
+                        <button type="submit" name="color" value="#0000FF" title="Biru"
+                            class="w-10 h-10 rounded-full bg-blue-500 border-2 border-transparent hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform transform hover:scale-110 {{ request('color') == '#0000FF' ? 'ring-2 ring-offset-2 ring-gray-500 scale-110' : '' }}">
+                        </button>
+                        
+                        {{-- Hijau --}}
+                        <button type="submit" name="color" value="#008000" title="Hijau"
+                            class="w-10 h-10 rounded-full bg-green-500 border-2 border-transparent hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-transform transform hover:scale-110 {{ request('color') == '#008000' ? 'ring-2 ring-offset-2 ring-gray-500 scale-110' : '' }}">
+                        </button>
+                        
+                        {{-- Kuning --}}
+                        <button type="submit" name="color" value="#FFFF00" title="Kuning"
+                            class="w-10 h-10 rounded-full bg-yellow-400 border-2 border-transparent hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 transition-transform transform hover:scale-110 {{ request('color') == '#FFFF00' ? 'ring-2 ring-offset-2 ring-gray-500 scale-110' : '' }}">
+                        </button>
+
+                        {{-- Hitam --}}
+                        <button type="submit" name="color" value="#000000" title="Hitam"
+                            class="w-10 h-10 rounded-full bg-black border-2 border-gray-600 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-transform transform hover:scale-110 {{ request('color') == '#000000' ? 'ring-2 ring-offset-2 ring-gray-500 scale-110' : '' }}">
+                        </button>
+
+                        {{-- Putih --}}
+                        <button type="submit" name="color" value="#FFFFFF" title="Putih"
+                            class="w-10 h-10 rounded-full bg-white border-2 border-gray-300 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-transform transform hover:scale-110 {{ request('color') == '#FFFFFF' ? 'ring-2 ring-offset-2 ring-gray-500 scale-110' : '' }}">
+                        </button>
+
+                        {{-- Tombol Reset (Hanya muncul jika sedang memfilter) --}}
+                        @if(request('color'))
+                            <a href="{{ route('photos.index') }}" 
+                               class="ml-4 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors text-sm font-medium">
+                                Reset Filter
+                            </a>
+                        @endif
+                    </div>
+                </form>
+            </div>
+            {{-- [SELESAI] BAGIAN FILTER WARNA --}}
+
             @if(session('success'))
                 <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded-r-lg shadow-sm">
                     <div class="flex items-center">
@@ -91,27 +139,4 @@
             @endif
         </div>
     </div>
-
-    <script>
-        function toggleDropdown(photoId) {
-            const dropdown = document.getElementById('dropdown-' + photoId);
-            // Close all other dropdowns
-            document.querySelectorAll('[id^="dropdown-"]').forEach(el => {
-                if (el.id !== 'dropdown-' + photoId) {
-                    el.classList.add('hidden');
-                }
-            });
-            // Toggle current dropdown
-            dropdown.classList.toggle('hidden');
-        }
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('[onclick*="toggleDropdown"]') && !event.target.closest('[id^="dropdown-"]')) {
-                document.querySelectorAll('[id^="dropdown-"]').forEach(el => {
-                    el.classList.add('hidden');
-                });
-            }
-        });
-    </script>
 </x-app-layout>
