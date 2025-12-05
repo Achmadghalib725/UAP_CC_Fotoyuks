@@ -1,59 +1,140 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <a href="http://fotoyuks.test">
+    <img src="public/images/logo.png" alt="Logo FotoYuks" width="200">
+  </a>
 </p>
 
-## About Laravel
+<h1 align="center">FotoYuks</h1>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  <strong>Abadikan dan bagikan momen terbaikmu dengan dunia.</strong>
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<p align="center">
+  <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-11-FF2D20?style=flat&logo=laravel&logoColor=white" alt="Laravel"></a>
+  <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=flat&logo=tailwind-css&logoColor=white" alt="Tailwind CSS"></a>
+  <a href="https://alpinejs.dev"><img src="https://img.shields.io/badge/Alpine.js-3.x-8BC0D0?style=flat&logo=alpine.js&logoColor=white" alt="Alpine.js"></a>
+</p>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📸 Tentang Proyek
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+**FotoYuks** adalah aplikasi galeri foto modern yang dibangun menggunakan framework **Laravel**. Aplikasi ini dirancang untuk memudahkan pengguna dalam menyimpan, mengelola, dan membagikan koleksi foto mereka dengan antarmuka yang bersih, responsif, dan estetis.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Dengan nuansa **Green Nature Theme**, FotoYuks memberikan pengalaman pengguna yang segar dan menenangkan.
 
-## Laravel Sponsors
+## ✨ Fitur Utama
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+* **🔐 Autentikasi Modern**: Halaman Login & Register dengan desain *Split Screen* yang elegan dan aman.
+* **🖼️ Manajemen Galeri**: Tampilan grid foto yang responsif dengan efek hover yang interaktif.
+* **📤 Upload Drag & Drop**: Kemudahan mengunggah foto dengan fitur seret-dan-lepas (drag-and-drop) yang intuitif.
+* **🎨 Filter Warna Dominan**: Fitur unik untuk mencari/menyaring foto berdasarkan nuansa warna (Merah, Biru, Hijau, dll).
+* **📱 Responsif Penuh**: Tampilan yang optimal di perangkat Desktop, Tablet, dan Mobile.
+* **📊 Dashboard Informatif**: Ringkasan aktivitas dan akses cepat ke fitur-fitur penting.
+* **⚙️ Manajemen Profil**: Pengguna dapat memperbarui informasi akun, mengganti password, dan mengelola privasi.
+* **📂 Detail Metadata**: Melihat informasi rinci foto seperti ukuran file, tipe format, dan tanggal upload.
 
-### Premium Partners
+## 🛠️ Teknologi yang Digunakan
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+* **Backend**: Laravel (PHP Framework)
+* **Frontend**: Blade Templates, Tailwind CSS
+* **Interactivity**: Alpine.js
+* **Database**: MySQL / MariaDB
+* **Build Tool**: Vite
 
-## Contributing
+## 🚀 Instalasi & Menjalankan Proyek
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Ikuti langkah-langkah berikut untuk menjalankan proyek ini di komputer lokal Anda:
 
-## Code of Conduct
+### Prasyarat
+Pastikan Anda telah menginstal:
+* PHP >= 8.2
+* Composer
+* Node.js & NPM
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Langkah-langkah
 
-## Security Vulnerabilities
+1.  **Clone Repository**
+    ```bash
+    git clone [https://github.com/username/uap-cc-fotoyuks.git](https://github.com/username/uap-cc-fotoyuks.git)
+    cd uap-cc-fotoyuks
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2.  **Instal Dependensi PHP**
+    ```bash
+    composer install
+    ```
 
-## License
+3.  **Instal Dependensi Frontend**
+    ```bash
+    npm install
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4.  **Konfigurasi Environment**
+    Salin file `.env.example` menjadi `.env`:
+    ```bash
+    cp .env.example .env
+    ```
+    Buka file `.env` dan sesuaikan konfigurasi database Anda:
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=nama_database_anda
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
+
+5.  **Generate Application Key**
+    ```bash
+    php artisan key:generate
+    ```
+
+6.  **Migrasi Database**
+    Jalankan migrasi untuk membuat tabel yang diperlukan:
+    ```bash
+    php artisan migrate
+    ```
+
+7.  **Link Storage**
+    Penting! Jalankan perintah ini agar foto yang diupload bisa diakses publik:
+    ```bash
+    php artisan storage:link
+    ```
+
+8.  **Jalankan Proyek**
+    Jalankan server pengembangan Laravel dan Vite (dalam 2 terminal terpisah):
+    
+    *Terminal 1:*
+    ```bash
+    php artisan serve
+    ```
+    
+    *Terminal 2:*
+    ```bash
+    npm run dev
+    ```
+
+9.  **Selesai!**
+    Buka browser dan akses: `http://localhost:8000`
+
+## 📂 Struktur Folder Penting
+
+* `app/Http/Controllers` - Logika backend (PhotoController, ProfileController).
+* `resources/views` - Tampilan antarmuka (Blade templates).
+    * `auth/` - Halaman Login, Register, dll.
+    * `photos/` - Halaman galeri foto (Index, Create, Show).
+    * `layouts/` - Layout utama (Navigation, Guest).
+* `public/images` - Tempat penyimpanan aset statis seperti logo.
+* `routes/web.php` - Definisi rute aplikasi.
+
+## 📄 Lisensi
+
+Proyek ini bersifat open-source dan dilisensikan di bawah [MIT license](https://opensource.org/licenses/MIT).
+
+---
+
+<p align="center">
+  Dibuat dengan ❤️ untuk UAP Cloud Computing
+</p>
