@@ -14,6 +14,7 @@ class Photo extends Model
         'size',
         'mime_type',
         'user_id',
+        'dominant_color',
     ];
 
     public function user(): BelongsTo

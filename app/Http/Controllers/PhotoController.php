@@ -17,27 +17,22 @@ class PhotoController extends Controller
 
         if ($request->filled('color')) {
             $targetHex = $request->color;
-            
+
             try {
                 list($r, $g, $b) = sscanf($targetHex, "#%02x%02x%02x");
-                
-                // 1. Simpan rumus jarak warna dalam variabel agar rapi
-                // Rumus ini khusus untuk PostgreSQL
+
+                // Gunakan rumus jarak warna yang lebih sederhana untuk dominant_color
                 $distanceCalculation = "SQRT(
                     POWER(('x' || SUBSTRING(dominant_color, 2, 2))::bit(8)::int - ?, 2) +
                     POWER(('x' || SUBSTRING(dominant_color, 4, 2))::bit(8)::int - ?, 2) +
                     POWER(('x' || SUBSTRING(dominant_color, 6, 2))::bit(8)::int - ?, 2)
                 )";
 
-                // 2. Select data beserta jarak warnanya
-                $query->selectRaw("*, $distanceCalculation as color_distance", [$r, $g, $b]);
-                
-                // 3. FILTER: Hanya ambil yang jaraknya kurang dari 100 (Bisa diubah sesuai kebutuhan)
-                // Kita gunakan whereRaw karena 'color_distance' alias belum terbentuk saat filtering WHERE berjalan
-                $query->whereRaw("$distanceCalculation <= 100", [$r, $g, $b]);
-                
-                // 4. Urutkan dari yang paling mirip
-                $query->orderBy('color_distance', 'asc');
+                // Filter warna dengan toleransi yang lebih besar (200 alih-alih 100)
+                $query->selectRaw("*, $distanceCalculation as color_distance", [$r, $g, $b])
+                      ->whereRaw("$distanceCalculation <= 200", [$r, $g, $b])
+                      ->whereNotNull('dominant_color')
+                      ->orderBy('color_distance', 'asc');
 
             } catch (\Exception $e) {
                 $query->latest();
@@ -67,11 +62,12 @@ class PhotoController extends Controller
         $file = $request->file('photo');
         $path = $file->store('photos', 'public');
 
-        // --- DETEKSI WARNA DOMINAN (DEBUG MODE) ---
+        // --- DETEKSI PALET WARNA ---
         $hexColor = null;
-        
+        $colorPalette = null;
+
         // Ambil path fisik file menggunakan Storage facade (Lebih aman dari manual string)
-        $fullPath = Storage::disk('public')->path($path); 
+        $fullPath = Storage::disk('public')->path($path);
 
         try {
             // Cek apakah file benar-benar ada
@@ -81,14 +77,30 @@ class PhotoController extends Controller
 
             $palette = Palette::fromFilename($fullPath);
             $extractor = new ColorExtractor($palette);
-            $colors = $extractor->extract(1);
-            
+
+            // Ekstrak 5 warna teratas dengan persentase
+            $colors = $extractor->extract(5);
+
             if (empty($colors)) {
                 dd("Ekstraktor gagal menemukan warna.");
             }
 
+            // Warna dominan (pertama)
             $hexColor = Color::fromIntToHex($colors[0]);
-            
+
+            // Palet warna lengkap dengan persentase (berdasarkan urutan ekstraksi)
+            $colorPalette = [];
+            $totalExtracted = count($colors);
+            foreach ($colors as $index => $color) {
+                $hex = Color::fromIntToHex($color);
+                // Berikan persentase berdasarkan posisi (warna pertama = 50%, kedua = 25%, dst.)
+                $percentage = 50 / pow(2, $index);
+                $colorPalette[] = [
+                    'hex' => $hex,
+                    'percentage' => round($percentage, 2)
+                ];
+            }
+
         } catch (\Exception $e) {
             // JANGAN DIAMKAN ERROR, TAMPILKAN KE LAYAR:
             dd("Error Ekstrak Warna: " . $e->getMessage());
@@ -102,7 +114,8 @@ class PhotoController extends Controller
             'size' => $file->getSize(),
             'mime_type' => $file->getMimeType(),
             'user_id' => auth()->id(),
-            'dominant_color' => $hexColor, 
+            'dominant_color' => $hexColor,
+            'color_palette' => json_encode($colorPalette),
         ]);
 
         return redirect()->route('photos.index')->with('success', 'Foto berhasil diupload!');
@@ -112,6 +125,21 @@ class PhotoController extends Controller
     {
         $this->authorize('view', $photo);
         return view('photos.show', compact('photo'));
+    }
+
+    public function rename(Request $request, Photo $photo)
+    {
+        $this->authorize('update', $photo);
+
+        $request->validate([
+            'original_name' => 'required|string|max:255',
+        ]);
+
+        $photo->update([
+            'original_name' => $request->original_name,
+        ]);
+
+        return redirect()->route('photos.show', $photo)->with('success', 'Nama foto berhasil diubah!');
     }
 
     public function destroy(Photo $photo)

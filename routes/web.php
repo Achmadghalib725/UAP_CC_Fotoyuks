@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
 
     // Photo routes
     Route::resource('photos', PhotoController::class);
+    Route::patch('photos/{photo}/rename', [PhotoController::class, 'rename'])->name('photos.rename');
     Route::get('photos/{id}/image', [PhotoController::class, 'image'])->name('photos.image');
     Route::get('photos/{id}/download', [PhotoController::class, 'download'])->name('photos.download');
 });
