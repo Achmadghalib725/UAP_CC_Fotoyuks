@@ -1,6 +1,6 @@
 <p align="center">
   <a href="http://fotoyuks.test">
-    <img src="public/images/logo.png" alt="Logo FotoYuks" width="200">
+    <img src="public/images/logo fotoyuks.png" alt="Logo FotoYuks" width="200">
   </a>
 </p>
 
