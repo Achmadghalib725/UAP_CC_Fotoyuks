@@ -11,38 +11,61 @@ use League\ColorExtractor\Palette;
 
 class PhotoController extends Controller
 {
-   public function index(Request $request)
+    public function index(Request $request)
     {
-       $query = auth()->user()->photos();
+        $query = auth()->user()->photos();
 
         if ($request->filled('color')) {
             $targetHex = $request->color;
 
             try {
-                list($r, $g, $b) = sscanf($targetHex, "#%02x%02x%02x");
+                // Convert target color to RGB
+                list($targetR, $targetG, $targetB) = sscanf($targetHex, "#%02x%02x%02x");
 
-                // Gunakan rumus jarak warna yang lebih sederhana untuk dominant_color
-                $distanceCalculation = "SQRT(
-                    POWER(('x' || SUBSTRING(dominant_color, 2, 2))::bit(8)::int - ?, 2) +
-                    POWER(('x' || SUBSTRING(dominant_color, 4, 2))::bit(8)::int - ?, 2) +
-                    POWER(('x' || SUBSTRING(dominant_color, 6, 2))::bit(8)::int - ?, 2)
-                )";
+                // Use PHP collection filtering for more reliable color matching
+                $photos = $query->whereNotNull('dominant_color')->get();
 
-                // Filter warna dengan toleransi yang lebih besar (200 alih-alih 100)
-                $query->selectRaw("*, $distanceCalculation as color_distance", [$r, $g, $b])
-                      ->whereRaw("$distanceCalculation <= 200", [$r, $g, $b])
-                      ->whereNotNull('dominant_color')
-                      ->orderBy('color_distance', 'asc');
+                $filteredPhotos = $photos->filter(function ($photo) use ($targetR, $targetG, $targetB) {
+                    $photoHex = $photo->dominant_color;
+                    list($photoR, $photoG, $photoB) = sscanf($photoHex, "#%02x%02x%02x");
+
+                    // Calculate Euclidean distance in RGB space
+                    $distance = sqrt(
+                        pow($photoR - $targetR, 2) +
+                        pow($photoG - $targetG, 2) +
+                        pow($photoB - $targetB, 2)
+                    );
+
+                    // Store distance for sorting
+                    $photo->color_distance = $distance;
+
+                    // Use threshold of 150 for balanced color matching
+                    return $distance <= 150;
+                })->sortBy('color_distance');
+
+                // Convert back to query builder result for pagination
+                $photoIds = $filteredPhotos->pluck('id')->toArray();
+                if (!empty($photoIds)) {
+                    // Create a CASE statement for PostgreSQL ordering
+                    $orderCases = [];
+                    foreach ($photoIds as $index => $id) {
+                        $orderCases[] = "WHEN {$id} THEN {$index}";
+                    }
+                    $orderByCase = "CASE id " . implode(' ', $orderCases) . " END";
+                    $query = Photo::whereIn('id', $photoIds)->orderByRaw($orderByCase);
+                } else {
+                    $query = Photo::whereRaw('1 = 0'); // No results
+                }
 
             } catch (\Exception $e) {
-                $query->latest();
+                $query = auth()->user()->photos()->latest();
             }
         } else {
             $query->latest();
         }
 
         $photos = $query->paginate(12);
-        
+
         // Append parameter 'color' ke link pagination agar saat pindah halaman filter tidak hilang
         $photos->appends(['color' => $request->color]);
         return view('photos.index', compact('photos'));
