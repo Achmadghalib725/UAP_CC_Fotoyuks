@@ -39,7 +39,7 @@
                                             </svg>
                                         </div>
                                         <h4 class="text-lg font-semibold text-gray-700 mb-1">Klik atau seret foto ke sini</h4>
-                                        <p class="text-sm text-gray-400">Format: JPG, PNG, GIF (Maks. 2MB)</p>
+                                        <p class="text-sm text-gray-400">Format: JPG, PNG, GIF (Maks. 10MB)</p>
                                     </div>
 
                                     <div id="file-preview" class="hidden w-full h-full">
